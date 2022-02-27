@@ -1,7 +1,3 @@
-# Code inspired by:
-# https://arcoresearchgroup.wordpress.com/2020/06/02/virtual-camera-for-opencv-using-v4l2loopback/
-# TODO: check https://pyimagesearch.com/2017/02/06/faster-video-file-fps-with-cv2-videocapture-and-opencv/
-
 import cv2
 import time
 
