@@ -22,8 +22,6 @@ def main():
     camswitcher = AutoCameraSwitcher(
         devices=["/dev/video2", "/dev/video0"], resolution=(640, 480))
 
-    detector = FaceDetector()
-
     key_pressed = 0
 
     while not window_closed(WINDOW_TITLE) and key_pressed != ESC:
@@ -31,8 +29,6 @@ def main():
 
         if not has_frame:
             continue
-
-        detector.find_faces(cam_img)
 
         cv2.imshow(WINDOW_TITLE, cam_img)
         key_pressed = cv2.waitKey(1)

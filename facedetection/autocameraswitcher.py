@@ -19,11 +19,6 @@ class _CachedCameraSwitcher(FadeCameraSwitcher):
 
         return self.cams_cache[index]
 
-    def read(self):
-        self._clear_cache()
-
-        return super().read()
-
 
 class AutoCameraSwitcher(_CachedCameraSwitcher):
     def __init__(self, check_delay=0.2, *args, **kwargs):
@@ -52,10 +47,10 @@ class AutoCameraSwitcher(_CachedCameraSwitcher):
             if not has_frame:
                 continue
 
-            _, _, confidence = self.detector.find_faces(img)
+            _, _, confidences = self.detector.find_faces(img)
 
-            if confidence:
-                detections[index] = confidence
+            if len(confidences) > 0:
+                detections[index] = confidences.max()
 
         # print(detections)
 
