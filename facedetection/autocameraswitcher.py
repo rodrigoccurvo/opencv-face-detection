@@ -34,6 +34,15 @@ class AutoCameraSwitcher(_CachedCameraSwitcher):
 
         self.detector = FaceDetector()
 
+    def read(self):
+        self._clear_cache()
+
+        if not self.is_fading() and time.time() - self.last_check >= self.check_delay:
+            self.last_check = time.time()
+            self._select_facing_cam()
+
+        return super().read()
+
     def _select_facing_cam(self):
         size = len(self.cams)
         detections = np.zeros(size)
@@ -55,12 +64,3 @@ class AutoCameraSwitcher(_CachedCameraSwitcher):
         if max_confidence > 0:
             face_index = detections.argmax()
             self.select(face_index)
-
-    def read(self):
-        self._clear_cache()
-
-        if not self.is_fading() and time.time() - self.last_check >= self.check_delay:
-            self.last_check = time.time()
-            self._select_facing_cam()
-
-        return super().read()
