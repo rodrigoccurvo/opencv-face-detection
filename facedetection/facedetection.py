@@ -39,24 +39,3 @@ class FaceDetector:
         self._draw_rects(img, result[0], color)
 
         return result
-
-
-class CachedFaceDetector(FaceDetector):
-    def __init__(self, frames_cache, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.frames_cache = frames_cache
-        self.frames_left = 0
-        self.cached_result = None
-
-    def find_faces(self, img):
-        if self.frames_left <= 0:
-            self.cached_result = self._detect(img)
-
-            self.frames_left = self.frames_cache
-        else:
-            self.frames_left -= 1
-
-        self._draw_rects(img, self.cached_result[0], GREEN)
-
-        return self.cached_result
