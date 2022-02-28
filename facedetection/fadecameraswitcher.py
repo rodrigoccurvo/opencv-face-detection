@@ -10,10 +10,13 @@ class FadeCameraSwitcher(CameraSwitcher):
         self.select_time = 0
         self.current_opacity = 1.0
 
+    def is_fading(self):
+        return self.current_opacity != 1.0
+
     def select(self, index):
         # Don't change camera if we're
         # in the middle of a fade
-        if self.current_opacity < 1.0:
+        if self.is_fading():
             return False
 
         ret = super().select(index)
@@ -23,9 +26,6 @@ class FadeCameraSwitcher(CameraSwitcher):
             self.select_time = time.time()
 
         return ret
-
-    def is_fading(self):
-        return self.current_opacity != 1.0
 
     def _read_cam(self, index):
         return self.cams[index].read()
