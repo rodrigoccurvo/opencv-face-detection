@@ -27,16 +27,13 @@ class FadeCameraSwitcher(CameraSwitcher):
 
         return ret
 
-    def _read_cam(self, index):
-        return self.multicam.read(index)
-
     def read(self):
-        curr_has_frame, curr_img = self._read_cam(self.current)
+        curr_has_frame, curr_img = self.multicam.read(self.current)
 
         if not self.is_fading() or not curr_has_frame:
             return curr_has_frame, curr_img
 
-        prev_has_frame, prev_img = self._read_cam(self.previous)
+        prev_has_frame, prev_img = self.multicam.read(self.previous)
 
         if not prev_has_frame:
             return curr_has_frame, curr_img

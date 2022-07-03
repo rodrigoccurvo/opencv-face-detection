@@ -1,7 +1,6 @@
 import cv2
 from facedetection.autocameraswitcher import AutoCameraSwitcher
-from facedetection.facedetection import FaceDetector
-from facedetection.multicamera import MultiCamera
+from facedetection.multicameracached import MultiCameraCached
 
 
 def window_closed(window_title):
@@ -20,7 +19,7 @@ NUM_KEYS = [ord(str(i)) for i in range(10)]
 
 
 def main():
-    multicam = MultiCamera(
+    multicam = MultiCameraCached(
         devices=["/dev/video0", "/dev/video2"],
         resolution=(640, 480)
     )
@@ -29,6 +28,7 @@ def main():
     key_pressed = 0
 
     while not window_closed(WINDOW_TITLE) and key_pressed != ESC:
+        multicam.clear_cache()
         has_frame, cam_img = camswitcher.read()
 
         if not has_frame:

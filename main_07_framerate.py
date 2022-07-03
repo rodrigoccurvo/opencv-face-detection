@@ -3,6 +3,7 @@ import time
 
 from facedetection.autocameraswitcher import AutoCameraSwitcher
 from facedetection.facedetection import FaceDetector
+from facedetection.multicameracached import MultiCameraCached
 
 
 
@@ -25,9 +26,11 @@ FRAME_DELAY = 1.0 / FRAME_RATE
 
 
 def main():
-
-    camswitcher = AutoCameraSwitcher(
-        devices=["/dev/video2", "/dev/video0"], resolution=(640, 480))
+    multicam = MultiCameraCached(
+        devices=["/dev/video0", "/dev/video2"],
+        resolution=(640, 480)
+    )
+    camswitcher = AutoCameraSwitcher(multicam)
     detector = FaceDetector()
 
     last_time = 0
@@ -36,6 +39,7 @@ def main():
     while not window_closed(WINDOW_TITLE) and key_pressed != ESC:
         if time.time() - last_time >= FRAME_DELAY:
             last_time = time.time()
+            multicam.clear_cache()
             has_frame, cam_img = camswitcher.read()
 
             if not has_frame:
@@ -46,7 +50,7 @@ def main():
             cv2.imshow(WINDOW_TITLE, cam_img)
         else:
             # Flush buffer
-            camswitcher.flush()
+            multicam.flush()
 
         key_pressed = cv2.waitKey(1)
 
@@ -58,7 +62,7 @@ def main():
                 print(f"Can't select camera {num}")
 
     cv2.destroyAllWindows()
-    camswitcher.release()
+    multicam.release()
 
 
 if __name__ == "__main__":
