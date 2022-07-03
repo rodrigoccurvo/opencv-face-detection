@@ -1,6 +1,7 @@
 import cv2
 from facedetection.fadecameraswitcher import FadeCameraSwitcher
 from facedetection.facedetection import FaceDetector
+from facedetection.multicamera import MultiCamera
 
 
 def window_closed(window_title):
@@ -19,8 +20,11 @@ NUM_KEYS = [ord(str(i)) for i in range(10)]
 
 
 def main():
-    camswitcher = FadeCameraSwitcher(
-        devices=["/dev/video2", "/dev/video0"], resolution=(640, 480))
+    multicam = MultiCamera(
+        devices=["/dev/video0", "/dev/video2"],
+        resolution=(640, 480)
+    )
+    camswitcher = FadeCameraSwitcher(multicam)
 
     detector = FaceDetector()
 
@@ -45,7 +49,7 @@ def main():
                 print(f"Can't select camera {num}")
 
     cv2.destroyAllWindows()
-    camswitcher.release()
+    multicam.release()
 
 
 if __name__ == "__main__":

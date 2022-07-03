@@ -11,17 +11,17 @@ class _CachedCameraSwitcher(FadeCameraSwitcher):
         self._clear_cache()
 
     def _clear_cache(self):
-        self.cams_cache = [None] * len(self.cams)
+        self.cams_cache = [None] * len(self.multicam)
 
     def _read_cam(self, index):
         if self.cams_cache[index] is None:
-            self.cams_cache[index] = self.cams[index].read()
+            self.cams_cache[index] = self.multicam.read(index)
 
         return self.cams_cache[index]
 
 
 class AutoCameraSwitcher(_CachedCameraSwitcher):
-    def __init__(self, check_delay=0.2, *args, **kwargs):
+    def __init__(self, *args, check_delay=0.2, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.check_delay = check_delay
@@ -39,7 +39,7 @@ class AutoCameraSwitcher(_CachedCameraSwitcher):
         return super().read()
 
     def _select_facing_cam(self):
-        size = len(self.cams)
+        size = len(self.multicam)
         detections = np.zeros(size)
 
         for index in range(size):

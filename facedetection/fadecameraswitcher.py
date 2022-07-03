@@ -3,7 +3,7 @@ import time
 
 
 class FadeCameraSwitcher(CameraSwitcher):
-    def __init__(self, fade_delay=1, *args, **kwargs):
+    def __init__(self, *args, fade_delay=1, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fade_delay = fade_delay
@@ -28,7 +28,7 @@ class FadeCameraSwitcher(CameraSwitcher):
         return ret
 
     def _read_cam(self, index):
-        return self.cams[index].read()
+        return self.multicam.read(index)
 
     def read(self):
         curr_has_frame, curr_img = self._read_cam(self.current)
