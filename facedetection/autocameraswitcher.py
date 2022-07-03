@@ -14,7 +14,8 @@ class AutoCameraSwitcher(FadeCameraSwitcher):
         self.detector = FaceDetector()
 
     def read(self):
-        if not self.is_fading() and time.time() - self.last_check >= self.check_delay:
+        if (not self.is_fading()
+                and time.time() - self.last_check >= self.check_delay):
             self.last_check = time.time()
             self._select_facing_cam()
 

@@ -6,7 +6,6 @@ from facedetection.facedetection import FaceDetector
 from facedetection.multicameracached import MultiCameraCached
 
 
-
 def window_closed(window_title):
     try:
         window_closed = not cv2.getWindowProperty(

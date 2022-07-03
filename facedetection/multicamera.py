@@ -25,6 +25,3 @@ class MultiCamera:
     def release(self):
         for cam in self.cams:
             cam.release()
-
-
-

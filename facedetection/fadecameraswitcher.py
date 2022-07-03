@@ -41,7 +41,8 @@ class FadeCameraSwitcher(CameraSwitcher):
         blend = curr_img * self.current_opacity
         blend += prev_img * (1 - self.current_opacity)
 
-        self.current_opacity = (time.time() - self.select_time) / self.fade_delay
+        self.current_opacity = (
+            time.time() - self.select_time) / self.fade_delay
         self.current_opacity = min(self.current_opacity, 1.0)
 
         return True, blend.astype(curr_img.dtype)
