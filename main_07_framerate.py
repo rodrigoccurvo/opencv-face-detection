@@ -26,7 +26,7 @@ FRAME_DELAY = 1.0 / FRAME_RATE
 
 def main():
     multicam = MultiCameraCached(
-        devices=["/dev/video0", "/dev/video2"],
+        devices=["/dev/video2", "/dev/video0"],
         resolution=(640, 480)
     )
     camswitcher = AutoCameraSwitcher(multicam)

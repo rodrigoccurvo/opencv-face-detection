@@ -21,7 +21,7 @@ NUM_KEYS = [ord(str(i)) for i in range(10)]
 
 def main():
     multicam = MultiCamera(
-        devices=["/dev/video0", "/dev/video2"],
+        devices=["/dev/video2", "/dev/video0"],
         resolution=(640, 480)
     )
     camswitcher = CameraSwitcher(multicam)
